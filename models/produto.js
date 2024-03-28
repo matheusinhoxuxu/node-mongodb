@@ -5,6 +5,7 @@ const schema = moongoose.Schema({
     preco: Number,
     tamanho: String,
     tipo: String,
+    ingredientes:[]
 })
 
 const Produto = moongoose.model('Produto', schema)
