@@ -3,7 +3,25 @@ const Produto = require("../models/produto")
 
 const ProdutoController = {
     getAll: async (req, res) => {
-        res.json(await Produto.find())
+        const filtros = {}
+        const campos = Object.keys(Produto.schema.paths)
+
+        for(let campo in req.query){
+            if(campos.includes(campo)){
+                filtros[campo] = {$regex: new RegExp(req.query[campo],'i')}
+            }
+        }
+
+
+        //http://localhost:3000/produtos?tipo=pi 
+        // ? significa o início da declaração das variáveis da url  
+        // & separa as variáveis da url
+ 
+        res.json(await Produto.find(filtros))
+
+
+        // const tipo = req.query.tipo
+        //  res.json(await Produto.find({tipo: {$regex: new RegExp(tipo,'i')}}))
     },
     get: async (req, res) => {
 
